@@ -13,10 +13,6 @@ class LoginView extends GetWidget<AuthViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
