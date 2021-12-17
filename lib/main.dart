@@ -10,6 +10,7 @@ import 'view/screens/login_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        fontFamily: 'SourceSansPro',
+      ),
       debugShowCheckedModeBanner: false,
       initialBinding: Binding(),
       home: Scaffold(

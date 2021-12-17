@@ -1,6 +1,7 @@
 import 'package:ecommrceapp/constants.dart';
 import 'package:ecommrceapp/core/viewmodel/control_view_model.dart';
 import 'package:ecommrceapp/core/viewmodel/home_view_model.dart';
+import 'package:ecommrceapp/view/screens/details_view.dart';
 import 'package:ecommrceapp/view/screens/login_screen.dart';
 import 'package:ecommrceapp/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -129,61 +130,71 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _listViewProduct() {
-    return Container(
-      height: 350,
-      child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(
-          width: 20,
-        ),
-        itemCount: names.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Container(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.grey.shade100,
-                  ),
+    return GetBuilder<HomeViewModel>(
+      builder: (controller) => Container(
+        height: 350,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => SizedBox(
+            width: 20,
+          ),
+          itemCount: controller.productModel.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Get.to(DetailsScreen(model: controller.productModel[index]));
+              },
+              child: SingleChildScrollView(
+                child: Container(
                   width: MediaQuery.of(context).size.width * 0.4,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: 220,
-                    child: Image.asset(
-                      'assets/images/Image.png',
-                      fit: BoxFit.cover,
-                    ),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey.shade100,
+                        ),
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: 220,
+                          child: Image.network(
+                            controller.productModel[index].image!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      CustomText(
+                        text: controller.productModel[index].name!,
+                        alignment: Alignment.bottomLeft,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      CustomText(
+                        text: controller.productModel[index].description!,
+                        color: Colors.grey,
+                        alignment: Alignment.bottomLeft,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      CustomText(
+                        text:
+                            '\$ ${controller.productModel[index].price.toString()}',
+                        color: primaryColor,
+                        alignment: Alignment.bottomLeft,
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                CustomText(
-                  text: 'BoePlay Speaker',
-                  alignment: Alignment.bottomLeft,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CustomText(
-                  text: 'Bang and Olufsen',
-                  color: Colors.grey,
-                  alignment: Alignment.bottomLeft,
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                CustomText(
-                  text: '\$750',
-                  color: primaryColor,
-                  alignment: Alignment.bottomLeft,
-                ),
-              ],
-            ),
-          );
-        },
+              ),
+            );
+          },
+        ),
       ),
     );
   }
