@@ -21,7 +21,7 @@ class CartDatabaseHelper {
 
   initDb() async {
     String path = join(await getDatabasesPath(), 'CartProduct.db');
-    return await openDatabase(path, version: 1,
+    return await openDatabase(path, version: 2,
         onCreate: (Database db, int version) async {
       await db.execute(''' 
       CREATE TABLE $tableCartProduct (

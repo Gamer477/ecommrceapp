@@ -8,8 +8,8 @@ class CartViewModel extends GetxController {
 
   ValueNotifier<bool> _loading = ValueNotifier(false);
 
-  List<CartProductModel> _cartProductModel = [];
   List<CartProductModel> get cartProductModel => _cartProductModel;
+  List<CartProductModel> _cartProductModel = [];
   double _totalPrice = 0.0;
   double get totalPrice => _totalPrice;
   var dbHeleper = CartDatabaseHelper.db;

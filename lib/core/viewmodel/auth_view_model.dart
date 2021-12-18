@@ -1,5 +1,7 @@
 import 'package:ecommrceapp/core/services/firestore_user.dart';
+import 'package:ecommrceapp/helper/local_storage_data.dart';
 import 'package:ecommrceapp/model/user_model.dart';
+import 'package:ecommrceapp/view/screens/control_view.dart';
 import 'package:ecommrceapp/view/screens/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +23,15 @@ class AuthViewModel extends GetxController {
 
   String? get user => _user.value?.email;
 
+  LocalStrorageData localStrorageData = Get.find();
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    if (_auth.currentUser != null) {
+      getCurrentUserData(_auth.currentUser!.uid);
+    }
   }
 
   void googleSignInMethod() async {
@@ -39,7 +45,7 @@ class AuthViewModel extends GetxController {
     );
     await _auth.signInWithCredential(credential).then((user) async {
       saveUserData(user);
-      Get.offAll(HomeView());
+      Get.offAll(ControlView());
     });
   }
 
@@ -54,7 +60,6 @@ class AuthViewModel extends GetxController {
       print("Facccccccccccccccccce ${faceCredential}");
       await _auth.signInWithCredential(faceCredential).then((user) async {
         saveUserData(user);
-        Get.offAll(HomeView());
       });
     }
   }
@@ -64,9 +69,9 @@ class AuthViewModel extends GetxController {
       await _auth
           .signInWithEmailAndPassword(email: email!, password: password!)
           .then((user) async {
-        saveUserData(user);
-        Get.offAll(HomeView());
+        getCurrentUserData(user.user!.uid);
       });
+      Get.offAll(ControlView());
     } catch (e) {
       Get.snackbar(
         'Error Login Account',
@@ -83,7 +88,7 @@ class AuthViewModel extends GetxController {
           .createUserWithEmailAndPassword(email: email!, password: password!)
           .then((user) async {
         saveUserData(user);
-        Get.offAll(HomeView());
+        Get.offAll(ControlView());
       });
     } catch (e) {
       Get.snackbar(
@@ -96,13 +101,23 @@ class AuthViewModel extends GetxController {
   }
 
   void saveUserData(UserCredential user) async {
-    await FireStroeUser().addUserToFireStore(
-      UserModel(
-        userId: user.user!.uid,
-        name: name == null ? user.user!.displayName : name,
-        email: user.user!.email,
-        pic: '',
-      ),
+    UserModel userModel = UserModel(
+      userId: user.user!.uid,
+      name: name == null ? user.user!.displayName : name,
+      email: user.user!.email,
+      pic: '',
     );
+    await FireStroeUser().addUserToFireStore(userModel);
+    setUser(userModel);
+  }
+
+  void getCurrentUserData(String uid) async {
+    await FireStroeUser().getCurrentUser(uid).then((value) {
+      setUser(UserModel.fromJSON(value.data() as Map<dynamic, dynamic>));
+    });
+  }
+
+  void setUser(UserModel userModel) async {
+    await localStrorageData.setUser(userModel);
   }
 }

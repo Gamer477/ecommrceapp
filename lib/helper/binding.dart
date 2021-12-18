@@ -1,7 +1,9 @@
 import 'package:ecommrceapp/core/viewmodel/auth_view_model.dart';
 import 'package:ecommrceapp/core/viewmodel/cart_view_model.dart';
+import 'package:ecommrceapp/core/viewmodel/checkout_view_model.dart';
 import 'package:ecommrceapp/core/viewmodel/control_view_model.dart';
 import 'package:ecommrceapp/core/viewmodel/home_view_model.dart';
+import 'package:ecommrceapp/helper/local_storage_data.dart';
 import 'package:get/get.dart';
 
 class Binding extends Bindings {
@@ -11,5 +13,7 @@ class Binding extends Bindings {
     Get.lazyPut(() => ControlViewModel());
     Get.lazyPut(() => HomeViewModel());
     Get.lazyPut(() => CartViewModel());
+    Get.lazyPut(() => LocalStrorageData());
+    Get.lazyPut(() => CheckoutViewModel());
   }
 }

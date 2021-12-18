@@ -140,13 +140,17 @@ class DetailsScreen extends StatelessWidget {
                       child: CustomButton(
                           buttonText: 'ADD',
                           onPressed: () {
-                            controller.addProduct(CartProductModel(
-                              name: model!.name,
-                              image: model!.image,
-                              quantity: 1,
-                              price: model!.price,
-                              productId: model!.productId,
-                            ));
+                            print(
+                                'addddddddddddddddddddd ${controller.cartProductModel.length}');
+                            controller.addProduct(
+                              CartProductModel(
+                                name: model!.name,
+                                image: model!.image,
+                                quantity: 1,
+                                price: model!.price,
+                                productId: model!.productId,
+                              ),
+                            );
                           }),
                     ),
                   ),

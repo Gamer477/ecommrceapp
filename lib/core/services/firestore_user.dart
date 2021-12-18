@@ -10,4 +10,8 @@ class FireStroeUser {
           userModel.toJSON(),
         );
   }
+
+  Future<DocumentSnapshot> getCurrentUser(String uid) async {
+    return await _userCollectionRef.doc(uid).get();
+  }
 }
