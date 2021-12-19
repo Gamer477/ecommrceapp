@@ -126,17 +126,38 @@ class CheckOutView extends StatelessWidget {
                     : controller.pages == Pages.AddAddress
                         ? AddAddress()
                         : Summary(),
-                Container(
-                  width: 200,
-                  height: 100,
-                  padding: EdgeInsets.all(20),
-                  alignment: Alignment.bottomRight,
-                  child: CustomButton(
-                    buttonText: 'NEXT',
-                    onPressed: () {
-                      controller.changeIndex(controller.index + 1);
-                    },
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    controller.index == 0
+                        ? Container()
+                        : Container(
+                            width: 200,
+                            height: 100,
+                            padding: EdgeInsets.all(20),
+                            alignment: Alignment.bottomRight,
+                            child: CustomButton(
+                              buttonText: 'NEXT',
+                              onPressed: () {
+                                controller.changeIndex(controller.index + 1);
+                              },
+                            ),
+                          ),
+                    Container(
+                      width: 200,
+                      height: 100,
+                      padding: EdgeInsets.all(20),
+                      alignment: Alignment.bottomRight,
+                      child: CustomButton(
+                        color: Colors.white,
+                        textColor: primaryColor,
+                        buttonText: 'Back',
+                        onPressed: () {
+                          controller.changeIndex(controller.index - 1);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

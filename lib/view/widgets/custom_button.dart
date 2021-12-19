@@ -6,11 +6,14 @@ import 'custom_text.dart';
 class CustomButton extends StatelessWidget {
   final String buttonText;
   final Function onPressed;
-
+  final Color color;
+  final Color textColor;
   const CustomButton({
     Key? key,
     required this.buttonText,
     required this.onPressed,
+    this.color = primaryColor,
+    this.textColor = Colors.white,
   }) : super(key: key);
 
   @override
@@ -22,9 +25,10 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       onPressed: () => onPressed(),
+      highlightColor: color,
       child: CustomText(
         text: buttonText,
-        color: Colors.white,
+        color: textColor,
         alignment: Alignment.center,
       ),
     );

@@ -72,7 +72,8 @@ class AuthViewModel extends GetxController {
         getCurrentUserData(user.user!.uid);
       });
       Get.offAll(ControlView());
-    } catch (e) {
+    } on FirebaseException catch (e) {
+      print('Sign In with Email and Password Error ${e.message}');
       Get.snackbar(
         'Error Login Account',
         e.toString(),
@@ -90,7 +91,8 @@ class AuthViewModel extends GetxController {
         saveUserData(user);
         Get.offAll(ControlView());
       });
-    } catch (e) {
+    } on FirebaseException catch (e) {
+      print('create Account Error ${e.message}');
       Get.snackbar(
         'Error Sign Up Account',
         e.toString(),

@@ -21,7 +21,7 @@ class CartDatabaseHelper {
 
   initDb() async {
     String path = join(await getDatabasesPath(), 'CartProduct.db');
-    return await openDatabase(path, version: 2,
+    return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(''' 
       CREATE TABLE $tableCartProduct (
@@ -29,17 +29,21 @@ class CartDatabaseHelper {
         $columnImage TEXT NOT NULL,
         $columnQuantity INTEGER NOT NULL,
         $columnPrice TEXT NOT NULL,
-        $columnProductId TEXT NOT NULL)
+        $columnProductId TEXT NOT NULL,
+        )
       ''');
     });
   }
 
   Future<List<CartProductModel>> getAllProduct() async {
     var dbClient = await database;
+    print('dbClientdbClient $dbClient');
     List<Map> maps = await dbClient.query(tableCartProduct);
+    print('maps maps $maps');
     List<CartProductModel> list = maps.isNotEmpty
         ? maps.map((product) => CartProductModel.fromJSON(product)).toList()
         : [];
+    print('List List $list');
     return list;
   }
 

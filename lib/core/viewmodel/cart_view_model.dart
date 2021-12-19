@@ -44,6 +44,7 @@ class CartViewModel extends GetxController {
       }
 
       await dbHeleper.insert(cartProductModel);
+      print('_cartProductModel_cartProductModel${_cartProductModel.length}');
       _cartProductModel.add(cartProductModel);
       _totalPrice +=
           (double.parse(cartProductModel.price!) * cartProductModel.quantity!);
